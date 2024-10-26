@@ -1,0 +1,25 @@
+@startuml
+class Student {
+    - fullName: String
+    - ulearnId: String
+    - group: String
+}
+
+class Task {
+    - score: int
+    - type: String
+}
+
+class Course {
+    - name: String
+    - themes: List<Theme>
+}
+
+class Theme {
+    - name: String
+    - tasks: List<Task>
+}
+
+Course --> Theme
+Theme --> Task
+@enduml
