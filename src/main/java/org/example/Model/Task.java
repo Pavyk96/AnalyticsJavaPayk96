@@ -5,5 +5,5 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class Task {
     private int score;
-    private String type;
+    private TaskType type;
 }

@@ -15,11 +15,24 @@ class Course {
     - themes: List<Theme>
 }
 
+class Course {
+    - name: String
+    - students: List<Student>
+    - themes: List<Theme>
+}
+
 class Theme {
     - name: String
     - tasks: List<Task>
 }
 
+enum TaskType {
+    HOMEWORK,
+    CONTROL_QUESTION;
+}
+
 Course --> Theme
+Course --> Student
 Theme --> Task
+Task.TaskType
 @enduml
