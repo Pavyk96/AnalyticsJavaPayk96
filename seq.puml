@@ -3,6 +3,8 @@ class Student {
     - fullName: String
     - ulearnId: String
     - group: String
+    - score : int
+    - idCity : int
 }
 
 class Task {
@@ -31,6 +33,11 @@ enum TaskType {
     CONTROL_QUESTION;
 }
 
+class City {
+    - idCity : int
+    - name : String
+}
+Student --> City
 Course --> Theme
 Course --> Student
 Theme --> Task
