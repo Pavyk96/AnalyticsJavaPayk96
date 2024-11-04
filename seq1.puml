@@ -1,0 +1,20 @@
+@startuml
+class Student {
+    - String : id
+    - String : fullName
+    - String : group
+}
+
+class Course {
+    - int : id
+    - String : id-student
+    - int : score
+    - int : id-city
+}
+
+class City {
+    - int : id
+    - String : name
+}
+
+@enduml

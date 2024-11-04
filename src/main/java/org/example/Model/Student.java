@@ -1,18 +1,15 @@
 package org.example.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Student {
-    private String idUlern;
+    private String id;
     private String fullName;
     private int score;
     private String group;
-    private City city;
 }
