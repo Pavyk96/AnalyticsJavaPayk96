@@ -8,5 +8,6 @@ public class App
     {
         System.out.println( "Hello World!" );
         ModelParser.CsvToStudents();
+        ModelParser.CsvToThemes();
     }
 }

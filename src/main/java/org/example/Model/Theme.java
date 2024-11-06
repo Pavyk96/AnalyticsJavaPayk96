@@ -1,17 +1,11 @@
 package org.example.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
-
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Theme {
+    private long id;
     private String name;
-    private List<Task> tasks;
 }
