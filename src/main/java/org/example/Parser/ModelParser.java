@@ -2,6 +2,7 @@ package org.example.Parser;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import lombok.Getter;
 import org.example.Model.Student;
 import org.example.Model.Theme;
 
@@ -13,22 +14,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public class ModelParser {
 
     protected static Path path = Paths.get("java-rtf.csv");
 
-    protected static List<Student> studentList = new ArrayList<>();
-    protected static List<Theme> themeList = new ArrayList<>();
+    public static List<Student> studentList = new ArrayList<>();
+    public static List<Theme> themeList = new ArrayList<>();
 
     public static void CsvToStudents() {
         try (CSVReader reader = new CSVReader(new FileReader(path.toString()))) {
             reader.skip(3);
-            List<String[]> records = reader.readAll();
+            List<String[]> records = reader.readAll(); //nextRead
             for (String[] record : records) {
                 Student student = parseRecord(record);
                 studentList.add(student);
             }
-            studentList.forEach(System.out::println);
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
@@ -41,7 +42,7 @@ public class ModelParser {
         int score = Integer.parseInt(record[3])
                     +Integer.parseInt(record[4])
                     +Integer.parseInt(record[5]);
-        return new Student(id, name, score, group);
+        return new Student(id, name, score, group, null);
     }
 
     public static void CsvToThemes() {
