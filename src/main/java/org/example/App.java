@@ -2,7 +2,7 @@ package org.example;
 
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
-import org.example.Parser.ModelParser;
+import org.example.parser.ModelParser;
 import org.example.vkRepo.VkApiRepo;
 
 import java.io.IOException;
