@@ -13,6 +13,7 @@ import com.vk.api.sdk.objects.users.UserFull;
 import org.example.model.Student;
 import org.example.modelRepo.StudentRepo;
 import org.example.parser.ModelParser;
+import org.example.util.DatabaseUtil;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -145,35 +146,31 @@ public class VkApiRepo {
 
     public static void UppdateStudentInf() throws IOException, ClientException, ApiException, InterruptedException {
         VkApiRepo vkApiRepo = new VkApiRepo();
+
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            for(Student student : ModelParser.studentList) {
+            for (Student student : ModelParser.studentList) {
                 student.setCity(vkApiRepo.findUserCityByFullName(student.getFullName()));
                 Long id = vkApiRepo.findStudentId(student.getFullName());
                 student.setCountOfItGroups(vkApiRepo.findStudentItGroups(id));
-                System.out.println(student);
-                Transaction transaction = session.beginTransaction();
-                int city = -1;
-                if (student.getCity() != null) {
-                    city = student.getCity().getId();
-                }
-                StudentRepo group = new StudentRepo(student.getId(),
+
+                int city = student.getCity() != null ? student.getCity().getId() : -1;
+
+                StudentRepo group = new StudentRepo(
+                        student.getId(),
                         student.getScore(),
                         student.getCountOfItGroups(),
-                        city);
-                try {
-                    session.save(group);
-                    transaction.commit();
-                }
-                catch (Exception e){
-                    System.out.println("Запись уже есть");
-                }
-                Thread.sleep(700);
-            }
+                        city
+                );
 
+                // Сохранение студента в базе через отдельный метод
+                DatabaseUtil.saveStudent(group);
+
+                Thread.sleep(700); // Пауза между запросами
+            }
         } finally {
             HibernateUtil.shutdown();
         }
-
     }
+
 
 }
