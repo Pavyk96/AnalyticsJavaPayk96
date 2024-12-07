@@ -153,7 +153,7 @@ public class VkApiRepo {
                 Long id = vkApiRepo.findStudentId(student.getFullName());
                 student.setCountOfItGroups(vkApiRepo.findStudentItGroups(id));
 
-                int city = student.getCity() != null ? student.getCity().getId() : -1;
+                String city = student.getCity() != null ? student.getCity().getTitle() : "Неизвестный город";
 
                 StudentRepo group = new StudentRepo(
                         student.getId(),

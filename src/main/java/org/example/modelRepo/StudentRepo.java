@@ -21,5 +21,5 @@ public class StudentRepo {
     private int itGroups;
 
     @Column
-    private int cityId;
+    private String cityName;
 }

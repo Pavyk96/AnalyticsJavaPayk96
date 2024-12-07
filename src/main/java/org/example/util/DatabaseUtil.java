@@ -17,24 +17,31 @@ public class DatabaseUtil {
                 transaction.commit();
             } catch (Exception e) {
                 transaction.rollback();
-                System.out.println("Ошибка при сохранении: " + e.getMessage());
+                System.out.println("Ошибка при сохранении");
             }
         }
     }
 
-    public static void readAndPrintStudents() {
+    // Метод для чтения данных из базы данных
+    public static List<StudentRepo> readStudents() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // Создание HQL-запроса для получения всех студентов
             Query<StudentRepo> query = session.createQuery("FROM StudentRepo", StudentRepo.class);
-            List<StudentRepo> students = query.list();
-
-            // Вывод данных в консоль
-            for (StudentRepo student : students) {
-                System.out.println(student);
-            }
+            return query.list(); // Возвращаем список студентов
         } catch (Exception e) {
             System.out.println("Ошибка при чтении данных: " + e.getMessage());
+            return null; // В случае ошибки возвращаем null
         }
     }
 
+    // Метод для вывода данных в консоль
+    public static void printStudents(List<StudentRepo> students) {
+        if (students == null || students.isEmpty()) {
+            System.out.println("Нет данных для отображения.");
+            return;
+        }
+        for (StudentRepo student : students) {
+            System.out.println(student);
+        }
+    }
 }
