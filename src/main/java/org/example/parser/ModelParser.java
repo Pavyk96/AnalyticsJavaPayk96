@@ -1,10 +1,10 @@
-package org.example.Parser;
+package org.example.parser;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import lombok.Getter;
-import org.example.Model.Student;
-import org.example.Model.Theme;
+import org.example.model.Student;
+import org.example.model.Theme;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class ModelParser {
         int score = Integer.parseInt(record[3])
                     +Integer.parseInt(record[4])
                     +Integer.parseInt(record[5]);
-        return new Student(id, name, score, group, null);
+        return new Student(id, name, score, group, null, 0);
     }
 
     public static void CsvToThemes() {
