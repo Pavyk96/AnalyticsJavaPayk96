@@ -31,7 +31,7 @@ public class PieChartDrawer extends JFrame {
 
     private static JFreeChart createPieChart(PieDataset dataset) {
         JFreeChart chart = ChartFactory.createPieChart(
-                "сважечка после тяжечки",  // chart title
+                "",  // chart title
                 dataset,             // data
                 false,               // no legend
                 true,                // tooltips

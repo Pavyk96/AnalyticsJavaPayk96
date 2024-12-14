@@ -16,7 +16,6 @@ import org.example.parser.ModelParser;
 import org.example.util.DatabaseUtil;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +42,7 @@ public class VkApiRepo {
         this.userActor = new UserActor(APP_ID, CODE);
     }
 
-    private City findUserCityByFullName(String fullName) throws ApiException, ClientException {
+    public City findUserCityByFullName(String fullName) throws ApiException, ClientException {
         List<UserFull> city = vkApiClient.users()
                 .search(userActor)
                 .q(fullName)
@@ -55,7 +54,7 @@ public class VkApiRepo {
         return city.isEmpty() ? null : city.get(0).getCity();
     }
 
-    private Long findStudentId (String fullName) throws ClientException, ApiException {
+    public Long findStudentId (String fullName) throws ClientException, ApiException {
         List<UserFull> list = vkApiClient.users()
                 .search(userActor)
                 .q(fullName)
@@ -65,7 +64,7 @@ public class VkApiRepo {
         return list.isEmpty() ? null : list.get(0).getId();
     }
 
-    private int findStudentItGroups(Long id) throws ClientException, ApiException {
+    public int findStudentItGroups(Long id) throws ClientException, ApiException {
         try {
             List<SubscriptionsItem> subscriptionsItemList =
                     vkApiClient.users()
@@ -85,19 +84,19 @@ public class VkApiRepo {
         return 0;
     }
 
-    private int countGroup(List<SubscriptionsItem> subscriptionsItemList) {
-        int count = 0;
-        for (SubscriptionsItem item : subscriptionsItemList) {
-            String name = item.getUsersSubscriptionsItemAsGroupFull().getName();
-            if (isNameContainsIt(name)) {
-                count++;
+        public int countGroup(List<SubscriptionsItem> subscriptionsItemList) {
+            int count = 0;
+            for (SubscriptionsItem item : subscriptionsItemList) {
+                String name = item.getUsersSubscriptionsItemAsGroupFull().getName();
+                if (isNameContainsIt(name)) {
+                    count++;
+                }
             }
+
+            return count;
         }
 
-        return count;
-    }
-
-    private boolean isNameContainsIt(String name) {
+    public boolean isNameContainsIt(String name) {
         if (name == null || name.isEmpty()) {
             return false;
         }
