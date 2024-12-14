@@ -6,8 +6,12 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DatabaseUtil {
+
+    private static final int THREAD_POOL_SIZE = 4; // Размер пула потоков
 
     public static void saveStudent(StudentRepo studentRepo) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -17,9 +21,21 @@ public class DatabaseUtil {
                 transaction.commit();
             } catch (Exception e) {
                 transaction.rollback();
-                System.out.println("Ошибка при сохранении");
+                System.out.println("Ошибка при сохранении: " + e.getMessage());
             }
         }
+    }
+
+    public static void saveStudentsInParallel(List<StudentRepo> studentRepos) {
+        ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+        for (StudentRepo studentRepo : studentRepos) {
+            executor.submit(() -> saveStudent(studentRepo));
+        }
+        executor.shutdown(); // Закрываем Executor после выполнения задач
+        while (!executor.isTerminated()) {
+            // Ожидаем завершения всех потоков
+        }
+        System.out.println("Все студенты сохранены.");
     }
 
     // Метод для чтения данных из базы данных
