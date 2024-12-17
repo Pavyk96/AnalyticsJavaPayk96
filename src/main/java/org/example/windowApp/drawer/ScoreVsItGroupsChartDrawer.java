@@ -36,6 +36,7 @@ public class ScoreVsItGroupsChartDrawer extends JFrame {
         // Диапазоны групп
         int[] intervals = {0, 2, 5, 8, 12}; // Пример диапазонов
         String[] intervalLabels = {"0–2", "3–5", "6–8", "9–12"};
+        double[] intervalMidpoints = {1, 4, 6.5, 10.5}; // Средние точки для интервалов
 
         // Подготовка данных
         Map<String, List<Integer>> groupedScores = new LinkedHashMap<>();
@@ -56,13 +57,13 @@ public class ScoreVsItGroupsChartDrawer extends JFrame {
             }
         }
 
-        // Вычисление среднего балла для каждого диапазона
+        // Вычисление среднего балла для каждого диапазона и добавление в серию
         XYSeries series = new XYSeries("Средний балл по диапазонам IT-групп");
-        for (Map.Entry<String, List<Integer>> entry : groupedScores.entrySet()) {
-            List<Integer> scores = entry.getValue();
+        for (int i = 0; i < intervalLabels.length; i++) {
+            List<Integer> scores = groupedScores.get(intervalLabels[i]);
             if (!scores.isEmpty()) {
                 double averageScore = scores.stream().mapToInt(Integer::intValue).average().orElse(0);
-                series.add(series.getItemCount() + 1, averageScore); // Используем порядковый номер
+                series.add(intervalMidpoints[i], averageScore); // Добавляем среднюю точку интервала по X
             }
         }
 
@@ -70,6 +71,7 @@ public class ScoreVsItGroupsChartDrawer extends JFrame {
         dataset.addSeries(series);
         return dataset;
     }
+
 
 
     private static JFreeChart createLineChart(XYDataset dataset) {
