@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class App
 {
     public static void main(String[] args) throws IOException, ClientException, ApiException, InterruptedException {
-        //ModelParser.CsvToStudents();
+        //ModelParser.parseCsvToStudents();
         //VkApiRepo.UppdateStudentInf();
         ArrayList<StudentRepo> studentRepoList = (ArrayList<StudentRepo>) DatabaseUtil.readStudents();
 
